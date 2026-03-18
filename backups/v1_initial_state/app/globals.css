@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-light: #D4AF7A;
+  --color-gold: #B8943F;
+  --color-gold-dark: #8B6914;
+  --color-cream: #F5F0E8;
+  --color-charcoal: #1C1C1C;
+  --color-deep: #0D0D0D;
+  --color-muted: #6B6B6B;
+  --color-white: #FAFAFA;
+}
+
+@layer base {
+  :root {
+    --background: #F5F0E8;
+    --foreground: #1C1C1C;
+    --gold: #B8943F;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    cursor: none; /* custom cursor will be used */
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: #fff;
+  }
+}
+
+/* Lenis Recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
