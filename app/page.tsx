@@ -5,8 +5,8 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
-import AtmosphereSection from "@/components/AtmosphereSection";
 import AboutUrbanSaajh from "@/components/AboutUrbanSaajh";
+import Founder from "@/components/Founder";
 import Journal from "@/components/Journal";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -34,13 +34,13 @@ export default function Home() {
         {/* 4. Portfolio grid — editorial masonry-style project showcase */}
         <Portfolio />
 
-        {/* 5. Atmospheric full-width section — dark room/fireplace */}
-        <AtmosphereSection />
+        {/* 6. Founder — Tejinder Singh Bhogal portrait & story */}
+        <Founder />
 
-        {/* 6. Journal */}
+        {/* 7. Journal */}
         <Journal />
 
-        {/* 7. Contact form */}
+        {/* 8. Contact form */}
         <Contact />
       </main>
       <Footer />
