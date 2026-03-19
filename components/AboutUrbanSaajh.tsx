@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const slides = [
   {
@@ -85,8 +86,14 @@ export default function AboutUrbanSaajh() {
       <div className="grid grid-cols-2" style={{ minHeight: "clamp(380px, 90vw, 900px)" }}>
 
         {/* ── LEFT: cream side with images ── */}
-        <div className="relative flex flex-col"
-          style={{ background: "#FAF5EC", padding: "clamp(20px, 5vw, 64px) clamp(10px, 3vw, 40px) clamp(20px, 5vw, 64px) clamp(12px, 4vw, 56px)" }}>
+        <motion.div 
+          className="relative flex flex-col"
+          style={{ background: "#FAF5EC", padding: "clamp(20px, 5vw, 64px) clamp(10px, 3vw, 40px) clamp(20px, 5vw, 64px) clamp(12px, 4vw, 56px)" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
 
           <div className="absolute top-0 right-0"
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -121,21 +128,35 @@ export default function AboutUrbanSaajh() {
 
           <div className="absolute bottom-0 left-0"
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
-        </div>
+        </motion.div>
 
         {/* ── RIGHT: dark green side ── */}
-        <div className="relative flex flex-col justify-center overflow-hidden"
-          style={{ background: "#0D3B2E", padding: "clamp(20px, 5vw, 72px) clamp(12px, 3.5vw, 56px) clamp(16px, 4vw, 56px) clamp(10px, 3vw, 48px)" }}>
+        <motion.div 
+          className="relative flex flex-col justify-center overflow-hidden"
+          style={{ background: "#0D3B2E", padding: "clamp(20px, 5vw, 72px) clamp(12px, 3.5vw, 56px) clamp(16px, 4vw, 56px) clamp(10px, 3vw, 48px)" }}
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
 
           <div className="absolute top-0 left-0"
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
           {/* Heading — always visible */}
           <div className="flex flex-col" style={{ gap: "clamp(8px, 2vw, 20px)" }}>
-            <h2 className="font-serif text-white leading-tight"
-              style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)", marginBottom: "clamp(8px, 2vw, 20px)", fontWeight: 300 }}>
-              Design with<br />Clarity & Purpose
-            </h2>
+            <div style={{ overflow: "hidden" }}>
+              <motion.h2 
+                className="font-serif text-white leading-tight"
+                style={{ fontSize: "clamp(2rem, 5vw, 4.8rem)", marginBottom: "clamp(8px, 2vw, 20px)", fontWeight: 300 }}
+                initial={{ y: "100%", opacity: 0 }}
+                whileInView={{ y: "0%", opacity: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+              >
+                Design with<br />Clarity & Purpose
+              </motion.h2>
+            </div>
 
             {/* ── DESKTOP: full content stacked ── */}
             <div className="hidden md:block">
@@ -296,7 +317,7 @@ export default function AboutUrbanSaajh() {
 
           <div className="absolute bottom-0 right-0"
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
-        </div>
+        </motion.div>
 
       </div>
     </section>

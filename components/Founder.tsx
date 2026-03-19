@@ -2,11 +2,83 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const slides = [
+  {
+    id: 0,
+    label: "Core Philosophy",
+    title: null,
+    body: "Tejinder's approach is rooted in a simple truth — a home should feel like yours, not like a showroom. He designs for everyday life: real meals, real routines, real people — not for an Instagram grid.",
+  },
+  {
+    id: 1,
+    label: "Modern & Considered",
+    title: "Modern & Considered",
+    body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place.",
+  },
+  {
+    id: 2,
+    label: "Minimal Luxury",
+    title: "Minimal Luxury",
+    body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always.",
+  },
+  {
+    id: 3,
+    label: "Built for Living",
+    title: "Built for Living",
+    body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours.",
+  },
+];
 
 export default function Founder() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [dir, setDir] = useState<"left" | "right">("left");
+  const slideRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const mouseStartX = useRef(0);
+  const isDragging = useRef(false);
+
+  const goTo = (idx: number, d: "left" | "right") => {
+    if (fading) return;
+    setDir(d);
+    setFading(true);
+    setTimeout(() => {
+      setActiveSlide((idx + slides.length) % slides.length);
+      setFading(false);
+    }, 250);
+  };
+  const prev = () => goTo(activeSlide - 1, "right");
+  const next = () => goTo(activeSlide + 1, "left");
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+  };
+  const onMouseDown = (e: React.MouseEvent) => {
+    mouseStartX.current = e.clientX;
+    isDragging.current = true;
+    if (slideRef.current) slideRef.current.style.cursor = "grabbing";
+  };
+  const onMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - mouseStartX.current;
+    isDragging.current = false;
+    if (slideRef.current) slideRef.current.style.cursor = "grab";
+    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+  };
+
+  const slide = slides[activeSlide];
+  const slideStyle: React.CSSProperties = {
+    opacity: fading ? 0 : 1,
+    transform: fading ? `translateX(${dir === "left" ? "-12px" : "12px"})` : "translateX(0)",
+    transition: "opacity 0.25s ease, transform 0.25s ease",
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,7 +100,7 @@ export default function Founder() {
           }
         });
       },
-      { threshold: 0.4 } // Tweak threshold as needed for when it should start
+      { threshold: 0.1 } // Start as soon as it's slightly in view
     );
 
     if (sectionRef.current) {
@@ -55,7 +127,7 @@ export default function Founder() {
 
   return (
     <section id="founder" ref={sectionRef} className="w-full overflow-hidden">
-      <div className="grid grid-cols-2" style={{ minHeight: "clamp(580px, 110vw, 960px)" }}>
+      <div className="grid" style={{ minHeight: "clamp(380px, 90vw, 960px)", gridTemplateColumns: "1.3fr 1fr" }}>
 
         {/* ── LEFT: cream — video portrait ── */}
         <div
@@ -69,8 +141,12 @@ export default function Founder() {
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
           {/* Video portrait — tall aspect ratio like a portrait photo */}
-          <div
+          <motion.div
             className="relative flex-1 overflow-hidden"
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98] }}
             style={{
               borderRadius: "clamp(60px, 16vw, 180px) clamp(60px, 16vw, 180px) 0 0",
               minHeight: "clamp(280px, 70vw, 680px)",
@@ -102,7 +178,7 @@ export default function Founder() {
               className="absolute inset-0 w-full h-full flex items-center justify-center group focus:outline-none z-20 cursor-pointer"
             >
               <div
-                className="flex items-center justify-center rounded-full bg-black/20 border border-white/30 text-[#FAF5EC] backdrop-blur-md transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100"
+                className={`flex items-center justify-center rounded-full bg-black/20 border border-white/30 text-[#FAF5EC] backdrop-blur-md transition-all duration-300 ${isPlaying ? "opacity-0 pointer-events-none" : "opacity-100"} sm:opacity-0 sm:group-hover:opacity-100`}
                 style={{ width: "clamp(48px, 12vw, 80px)", height: "clamp(48px, 12vw, 80px)" }}
               >
                 {isPlaying ? (
@@ -139,7 +215,7 @@ export default function Founder() {
                 Tejinder Singh Bhogal
               </h3>
             </div>
-          </div>
+          </motion.div>
 
           {/* Quote strip below video */}
           <div
@@ -186,58 +262,149 @@ export default function Founder() {
 
           <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 24px)" }} />
 
-          {/* Core philosophy */}
-          <p
-            className="font-sans font-light leading-[1.85]"
-            style={{ fontSize: "clamp(11px, 1.8vw, 17px)", color: "rgba(255,255,255,0.72)", marginBottom: "clamp(16px, 3.5vw, 32px)" }}
-          >
-            Tejinder&apos;s approach is rooted in a simple truth — a home should feel like
-            yours, not like a showroom. He designs for everyday life: real meals, real
-            routines, real people — not for an Instagram grid.
-          </p>
+          <div className="hidden md:block">
+            {/* Core philosophy */}
+            <p
+              className="font-sans font-light leading-[1.85]"
+              style={{ fontSize: "clamp(11px, 1.8vw, 17px)", color: "rgba(255,255,255,0.72)", marginBottom: "clamp(16px, 3.5vw, 32px)" }}
+            >
+              Tejinder&apos;s approach is rooted in a simple truth — a home should feel like
+              yours, not like a showroom. He designs for everyday life: real meals, real
+              routines, real people — not for an Instagram grid.
+            </p>
 
-          {/* Pillars */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(5px, 1.3vw, 11px)", marginBottom: "clamp(12px, 3vw, 24px)" }}>
-            {[
-              {
-                title: "Modern & Considered",
-                body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place.",
-              },
-              {
-                title: "Minimal Luxury",
-                body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always.",
-              },
-              {
-                title: "Built for Living",
-                body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours.",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                style={{
-                  background: "rgba(201,168,124,0.08)",
-                  borderLeft: "2px solid #C9A87C",
-                  padding: "clamp(7px, 1.6vw, 13px) clamp(10px, 2vw, 16px)",
-                  borderRadius: "0 3px 3px 0",
-                }}
-              >
-                <div className="flex items-center" style={{ gap: "clamp(5px, 1vw, 8px)", marginBottom: "clamp(2px, 0.5vw, 4px)" }}>
-                  <span style={{ width: "clamp(5px, 0.9vw, 7px)", height: "clamp(5px, 0.9vw, 7px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
-                  <h4
-                    className="font-serif italic text-white"
-                    style={{ fontSize: "clamp(11px, 2vw, 18px)", fontWeight: 300 }}
-                  >
-                    {item.title}
-                  </h4>
-                </div>
-                <p
-                  className="font-sans font-light leading-relaxed"
-                  style={{ fontSize: "clamp(10px, 1.5vw, 14px)", color: "rgba(255,255,255,0.58)", paddingLeft: "clamp(10px, 1.9vw, 15px)" }}
+            {/* Pillars */}
+            <motion.div 
+              style={{ display: "flex", flexDirection: "column", gap: "clamp(5px, 1.3vw, 11px)", marginBottom: "clamp(12px, 3vw, 24px)" }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{
+                visible: { transition: { staggerChildren: 0.2 } }
+              }}
+            >
+              {[
+                {
+                  title: "Modern & Considered",
+                  body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place.",
+                },
+                {
+                  title: "Minimal Luxury",
+                  body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always.",
+                },
+                {
+                  title: "Built for Living",
+                  body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours.",
+                },
+              ].map((item) => (
+                <motion.div
+                  key={item.title}
+                  variants={{
+                    hidden: { opacity: 0, x: -20 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
+                  }}
+                  style={{
+                    background: "rgba(201,168,124,0.08)",
+                    borderLeft: "2px solid #C9A87C",
+                    padding: "clamp(7px, 1.6vw, 13px) clamp(10px, 2vw, 16px)",
+                    borderRadius: "0 3px 3px 0",
+                  }}
                 >
-                  {item.body}
-                </p>
+                  <div className="flex items-center" style={{ gap: "clamp(5px, 1vw, 8px)", marginBottom: "clamp(2px, 0.5vw, 4px)" }}>
+                    <span style={{ width: "clamp(5px, 0.9vw, 7px)", height: "clamp(5px, 0.9vw, 7px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
+                    <h4
+                      className="font-serif italic text-white"
+                      style={{ fontSize: "clamp(11px, 2vw, 18px)", fontWeight: 300 }}
+                    >
+                      {item.title}
+                    </h4>
+                  </div>
+                  <p
+                    className="font-sans font-light leading-relaxed"
+                    style={{ fontSize: "clamp(10px, 1.5vw, 14px)", color: "rgba(255,255,255,0.58)", paddingLeft: "clamp(10px, 1.9vw, 15px)" }}
+                  >
+                    {item.body}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── MOBILE: swipeable slide ── */}
+          <div className="md:hidden" style={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div
+              ref={slideRef}
+              style={{ cursor: "grab", touchAction: "pan-y", minHeight: "clamp(120px, 34vw, 240px)" }}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+            >
+              <div style={slideStyle}>
+                {slide.title ? (
+                  <div style={{
+                    background: "rgba(201,168,124,0.08)",
+                    borderLeft: "2px solid #C9A87C",
+                    padding: "clamp(8px, 2vw, 18px) clamp(10px, 2.5vw, 20px)",
+                    borderRadius: "0 4px 4px 0"
+                  }}>
+                    <div className="flex items-center gap-2" style={{ marginBottom: "clamp(5px, 1.2vw, 10px)" }}>
+                      <span style={{ width: "clamp(6px, 1vw, 8px)", height: "clamp(6px, 1vw, 8px)", background: "#C9A87C", flexShrink: 0 }} />
+                      <h3 className="font-serif text-white/90 italic"
+                        style={{ fontSize: "clamp(11px, 2.2vw, 18px)", fontWeight: 300 }}>
+                        {slide.title}
+                      </h3>
+                    </div>
+                    <p className="font-sans text-white/70 leading-relaxed"
+                      style={{ fontSize: "clamp(10px, 2vw, 14px)", fontWeight: 300, paddingLeft: "clamp(12px, 2vw, 18px)" }}>
+                      {slide.body}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="font-sans text-white/75 leading-relaxed"
+                      style={{ fontSize: "clamp(11px, 2vw, 16px)", fontWeight: 300 }}>
+                      {slide.body}
+                    </p>
+                  </div>
+                )}
               </div>
-            ))}
+            </div>
+
+            {/* Mobile nav */}
+            <div className="flex items-center" style={{ gap: "clamp(5px, 1.5vw, 10px)", marginTop: "clamp(10px, 2.5vw, 18px)", marginBottom: "clamp(10px, 2.5vw, 18px)" }}>
+              {[prev, next].map((fn, i) => (
+                <button key={i} onClick={fn}
+                  className="rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200"
+                  style={{ width: "clamp(20px, 5vw, 28px)", height: "clamp(20px, 5vw, 28px)", border: "1px solid rgba(201,168,124,0.5)", color: "#C9A87C", background: "transparent" }}>
+                  <svg width="8" height="8" viewBox="0 0 14 14" fill="none">
+                    <polyline points={i === 0 ? "9,2 4,7 9,12" : "5,2 10,7 5,12"}
+                      stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              ))}
+              <div style={{ width: "1px", height: "14px", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
+              <span className="font-sans font-light tabular-nums"
+                style={{ fontSize: "clamp(8px, 1.8vw, 11px)", color: "#C9A87C" }}>
+                <span style={{ color: "#fff" }}>{String(activeSlide + 1).padStart(2, "0")}</span>
+                {" / "}{String(slides.length).padStart(2, "0")}
+              </span>
+              <div style={{ width: "1px", height: "14px", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
+              {/* Dots */}
+              <div className="flex flex-row items-center" style={{ gap: "3px" }}>
+                {slides.map((_, i) => (
+                  <button key={i} onClick={() => goTo(i, i > activeSlide ? "left" : "right")}
+                    style={{ padding: "2px 0", background: "none", border: "none", cursor: "pointer" }}>
+                    <span style={{
+                      display: "block", borderRadius: "9999px", transition: "all 0.3s",
+                      height: "clamp(3px, 0.7vw, 4px)",
+                      width: i === activeSlide ? "clamp(10px, 2.5vw, 14px)" : "clamp(3px, 0.7vw, 4px)",
+                      background: i === activeSlide ? "#C9A87C" : "rgba(201,168,124,0.3)",
+                    }} />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 20px)" }} />

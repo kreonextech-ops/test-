@@ -2,11 +2,28 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export default function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  
+  // Parallax effect: background moves down half as fast as you scroll
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: "clamp(380px, 75vw, 100vh)" }}>
-      <div className="absolute inset-0">
+    <section ref={ref} className="relative w-full overflow-hidden" style={{ height: "clamp(380px, 75vw, 100vh)" }}>
+      <motion.div 
+        className="absolute inset-0 origin-center" 
+        style={{ y: backgroundY }}
+        initial={{ scale: 1.05 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 3, ease: "easeOut" }}
+      >
         <Image
           src="/images/europa/lounge Room 4.jpg"
           alt="Artfully curated interior - Urban Saajh by Tej"
@@ -21,46 +38,63 @@ export default function Hero() {
             backgroundSize: "200px",
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="relative z-10 flex flex-col justify-end h-full max-w-7xl mx-auto" style={{ paddingLeft: "clamp(14px, 4vw, 48px)", paddingRight: "clamp(14px, 4vw, 48px)", paddingBottom: "clamp(20px, 5vw, 112px)" }}>
         <div className="max-w-xl">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 opacity-0 animate-fadeIn delay-200"
-            style={{ animationFillMode: "forwards" }}>
+          <motion.div 
+            className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
             <span className="divider bg-[#C8BBA8]/60" />
             <span className="tracking-[0.25em] uppercase text-[#C8BBA8] font-sans font-light" style={{ fontSize: "clamp(8px, 1.3vw, 11px)" }}>
               Luxury Interior Design
             </span>
-          </div>
+          </motion.div>
 
-          <h1 className="font-serif font-light text-[#FAF7F2] body-tight mb-6 sm:mb-8 opacity-0 animate-fadeInUp delay-300"
-            style={{ fontSize: "clamp(1.6rem, 5vw, 4.5rem)", animationFillMode: "forwards" }}>
+          <motion.h1 
+            className="font-serif font-light text-[#FAF7F2] body-tight mb-6 sm:mb-8"
+            style={{ fontSize: "clamp(1.6rem, 5vw, 4.5rem)" }}
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
             Artfully Curated,
             <br />
             <em className="italic font-light">Naturally Inspired</em>
             <br />
             Interiors
-          </h1>
+          </motion.h1>
 
-          <div className="opacity-0 animate-fadeInUp delay-500" style={{ animationFillMode: "forwards" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
             <Link href="#services"
               className="inline-flex items-center gap-2 sm:gap-3 border border-[#FAF7F2]/50 text-[#FAF7F2] tracking-[0.2em] uppercase font-sans font-light hover:bg-[#FAF7F2] hover:text-[#3D2B1F] transition-all duration-400 group"
               style={{ fontSize: "clamp(8px, 1.3vw, 11px)", padding: "clamp(8px, 1.5vw, 12px) clamp(14px, 3vw, 28px)" }}>
               <span>Work with Us</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Scroll indicator — hidden on very small screens */}
-      <div className="hidden sm:flex absolute bottom-8 right-6 md:right-16 flex-col items-center gap-2 opacity-0 animate-fadeIn delay-700"
-        style={{ animationFillMode: "forwards" }}>
+      <motion.div 
+        className="hidden sm:flex absolute bottom-8 right-6 md:right-16 flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
+      >
         <span className="text-[9px] tracking-[0.25em] uppercase text-[#C8BBA8] font-sans font-light rotate-90 origin-center mb-6">
           Scroll
         </span>
         <div className="w-px h-10 bg-gradient-to-b from-[#C8BBA8]/60 to-transparent" />
-      </div>
+      </motion.div>
     </section>
   );
 }

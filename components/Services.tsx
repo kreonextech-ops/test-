@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
   {
@@ -65,7 +66,7 @@ const services = [
 
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [fading, setFading] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [slideDir, setSlideDir] = useState<"left" | "right">("left");
   const [showHint, setShowHint] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -76,14 +77,12 @@ export default function Services() {
   const archRef = useRef<HTMLDivElement>(null);
 
   const goTo = (idx: number, dir: "left" | "right") => {
-    if (fading) return;
+    if (isAnimating) return;
     if (!hasInteracted) { setHasInteracted(true); setShowHint(false); }
     setSlideDir(dir);
-    setFading(true);
-    setTimeout(() => {
-      setActiveIndex((idx + services.length) % services.length);
-      setTimeout(() => setFading(false), 400);
-    }, 300);
+    setIsAnimating(true);
+    setActiveIndex((idx + services.length) % services.length);
+    setTimeout(() => setIsAnimating(false), 500); // Prevent spam clicking during crossfade
   };
 
   const prev = () => goTo(activeIndex - 1, "right");
@@ -111,11 +110,7 @@ export default function Services() {
     return () => window.removeEventListener("mouseup", onMouseUp);
   });
 
-  const imgStyle: React.CSSProperties = {
-    opacity: fading ? 0 : 1,
-    transform: fading ? `translateX(${slideDir === "left" ? "-18px" : "18px"})` : "translateX(0)",
-    transition: "opacity 0.4s ease, transform 0.4s ease",
-  };
+
 
   return (
     <section id="services" className="w-full overflow-hidden">
@@ -136,9 +131,21 @@ export default function Services() {
               <h3 className="font-serif italic"
                 style={{
                   fontSize: "clamp(14px, 2.8vw, 26px)", color: "#fff", fontWeight: 300,
-                  opacity: fading ? 0 : 1, transition: "opacity 0.3s"
+                  transition: "opacity 0.3s"
                 }}>
-                {services[activeIndex].title}
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span 
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    style={{ position: "absolute" }}
+                  >
+                    {services[activeIndex].title}
+                  </motion.span>
+                </AnimatePresence>
+                {/* Invisible placeholder for height */}
+                <span className="opacity-0 pointer-events-none">{services[activeIndex].title}</span>
               </h3>
             </div>
           </div>
@@ -146,10 +153,23 @@ export default function Services() {
           <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 22px)" }} />
 
           {/* All services list */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(3px, 1vw, 8px)" }}>
+          <motion.div 
+            style={{ display: "flex", flexDirection: "column", gap: "clamp(3px, 1vw, 8px)" }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.1 } }
+            }}
+          >
             {services.map((svc, i) => (
-              <button key={svc.id} onClick={() => goTo(i, i > activeIndex ? "left" : "right")}
+              <motion.button key={svc.id} onClick={() => goTo(i, i > activeIndex ? "left" : "right")}
                 className="text-left w-full flex items-center transition-all duration-200 group"
+                variants={{
+                  hidden: { opacity: 0, x: -20 },
+                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                }}
                 style={{
                   gap: "clamp(6px, 1.5vw, 14px)",
                   padding: "clamp(5px, 1.2vw, 10px) clamp(8px, 1.8vw, 16px)",
@@ -173,9 +193,9 @@ export default function Services() {
                 {i === activeIndex && (
                   <span style={{ marginLeft: "auto", color: "#C9A87C", fontSize: "clamp(11px, 1.8vw, 17px)", flexShrink: 0 }}>→</span>
                 )}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", margin: "clamp(10px, 2.5vw, 22px) 0" }} />
 
@@ -216,8 +236,12 @@ export default function Services() {
           </div>
 
           {/* Arch image */}
-          <div ref={archRef} className="relative w-full select-none flex-1"
-            style={{ minHeight: "clamp(140px, 38vw, 420px)", cursor: "grab", touchAction: "pan-y" }}
+          <motion.div ref={archRef} className="relative w-full select-none flex-1"
+            style={{ minHeight: "clamp(140px, 38vw, 420px)", cursor: "grab", touchAction: "pan-y", originY: 1 }}
+            initial={{ scaleY: 0.8, opacity: 0 }}
+            whileInView={{ scaleY: 1, opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98] }}
             onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onMouseDown={onMouseDown}>
             <svg width="0" height="0" style={{ position: "absolute" }}>
               <defs>
@@ -228,10 +252,21 @@ export default function Services() {
             </svg>
             <div className="absolute inset-0" style={{ clipPath: "url(#arch-clip)", background: "rgba(201,168,124,0.2)" }} />
             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: "url(#arch-clip)" }}>
-              <Image key={activeIndex} src={services[activeIndex].image}
-                alt={services[activeIndex].title} fill
-                className="object-cover object-center" sizes="50vw"
-                style={imgStyle} draggable={false} />
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.div
+                  key={activeIndex}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, x: slideDir === "left" ? "20px" : "-20px" }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: slideDir === "left" ? "-20px" : "20px" }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  <Image src={services[activeIndex].image}
+                    alt={services[activeIndex].title} fill
+                    className="object-cover object-center" sizes="50vw"
+                    draggable={false} />
+                </motion.div>
+              </AnimatePresence>
               <div className="absolute inset-0" style={{ background: "rgba(13,59,46,0.12)" }} />
             </div>
 
@@ -255,10 +290,21 @@ export default function Services() {
                 style={{
                   fontSize: "clamp(11px, 1.8vw, 17px)",
                   color: "rgba(255,255,255,0.88)",
-                  opacity: fading ? 0 : 1,
-                  transition: "opacity 0.4s",
                 }}>
-                {services[activeIndex].description}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4 }}
+                    style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+                  >
+                    {services[activeIndex].description}
+                  </motion.span>
+                </AnimatePresence>
+                {/* Invisible placeholder for height */}
+                <span className="opacity-0 pointer-events-none block">{services[activeIndex].description}</span>
               </p>
             </div>
 
@@ -273,7 +319,7 @@ export default function Services() {
               <span className="uppercase font-sans font-light tracking-[0.2em]"
                 style={{ fontSize: "clamp(6px, 1vw, 8px)", color: "#FAF5EC" }}>Swipe</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Nav bar */}
           <div className="flex items-center" style={{ gap: "clamp(5px, 1.5vw, 12px)", marginTop: "clamp(10px, 2.5vw, 20px)" }}>
@@ -327,7 +373,7 @@ export default function Services() {
                 color: "#FAF5EC",
                 padding: "clamp(10px, 2vw, 16px) clamp(16px, 4vw, 32px)",
                 fontSize: "clamp(9px, 1.5vw, 13px)",
-                opacity: fading ? 0.6 : 1,
+                opacity: isAnimating ? 0.6 : 1,
                 transition: "opacity 0.3s, background 0.3s",
               }}
             >

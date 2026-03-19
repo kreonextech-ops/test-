@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const projects = [
   {
@@ -10,7 +11,7 @@ const projects = [
     slug: "europa-living",
     title: "Europa Living Room",
     category: "Turnkey",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Living 1.jpg",
   },
   {
@@ -18,7 +19,7 @@ const projects = [
     slug: "europa-master-bedroom",
     title: "Master Bedroom Suite",
     category: "Full Service",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Master Bedroom 1.jpg",
   },
   {
@@ -26,7 +27,7 @@ const projects = [
     slug: "europa-dining",
     title: "Dining Space",
     category: "Consultation",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Dining 1.jpg",
   },
   {
@@ -34,7 +35,7 @@ const projects = [
     slug: "europa-lounge",
     title: "Lounge Room",
     category: "Full Service",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Lounge Room 3.jpg",
   },
   {
@@ -42,7 +43,7 @@ const projects = [
     slug: "europa-kitchen",
     title: "Modular Kitchen",
     category: "Kitchen",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Kitchen 1.jpg",
   },
   {
@@ -50,7 +51,7 @@ const projects = [
     slug: "europa-living-2",
     title: "Living — Alternate View",
     category: "Turnkey",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Living 2.jpg",
   },
   {
@@ -58,7 +59,7 @@ const projects = [
     slug: "europa-passage",
     title: "Passage & Entry",
     category: "Full Service",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/P1.jpg",
   },
   {
@@ -66,7 +67,7 @@ const projects = [
     slug: "europa-bedroom-2",
     title: "Guest Bedroom",
     category: "Curation",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Master Bedroom 1.jpg",
   },
   {
@@ -74,7 +75,7 @@ const projects = [
     slug: "europa-lounge-2",
     title: "Lounge — Evening Light",
     category: "Consultation",
-    location: "Mumbai",
+    location: "Bagdogra, Siliguri",
     image: "/images/europa/Lounge Room 3.jpg",
   },
 ];
@@ -103,8 +104,12 @@ function ProjectCard({ project, colSpan, rowSpan }: {
     : { height: "clamp(70px, 18vw, 272px)" };
 
   return (
-    <div
-      className="relative img-zoom group overflow-hidden"
+    <motion.div
+      className="relative group overflow-hidden"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       style={{
         gridColumn: `span ${colSpan}`,
         gridRow: `span ${rowSpan}`,
@@ -115,7 +120,7 @@ function ProjectCard({ project, colSpan, rowSpan }: {
         src={project.image}
         alt={project.title}
         fill
-        className="object-cover object-center"
+        className="object-cover object-center transition-transform duration-[1200ms] ease-[0.21,0.47,0.32,0.98] group-hover:scale-105"
         sizes={`${colSpan === 2 ? "66vw" : "33vw"}`}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#1a130b]/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
@@ -149,7 +154,7 @@ function ProjectCard({ project, colSpan, rowSpan }: {
           <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -188,7 +193,14 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto" style={{ padding: "0 clamp(14px, 4vw, 48px)" }}>
 
         {/* Header */}
-        <div className="flex items-end justify-between" style={{ marginBottom: "clamp(20px, 5vw, 56px)" }}>
+        <motion.div 
+          className="flex items-end justify-between" 
+          style={{ marginBottom: "clamp(20px, 5vw, 56px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div>
             <p
               className="tracking-[0.25em] uppercase font-sans font-light"
@@ -211,7 +223,7 @@ export default function Portfolio() {
             <span>View All Projects</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </Link>
-        </div>
+        </motion.div>
 
         {/* ── DESKTOP GRID (hidden on mobile) ── */}
         <div

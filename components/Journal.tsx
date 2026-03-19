@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const posts = [
   {
@@ -33,7 +35,14 @@ export default function Journal() {
     <section id="journal" className="bg-[#FAF7F2]" style={{ padding: "clamp(20px, 5vw, 128px) 0" }}>
       <div className="max-w-7xl mx-auto" style={{ padding: "0 clamp(14px, 4vw, 48px)" }}>
         {/* Header */}
-        <div className="flex items-end justify-between" style={{ marginBottom: "clamp(32px, 8vw, 64px)" }}>
+        <motion.div 
+          className="flex items-end justify-between" 
+          style={{ marginBottom: "clamp(32px, 8vw, 64px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div>
             <p className="tracking-[0.25em] uppercase text-[#C8BBA8] font-sans font-light" style={{ fontSize: "clamp(8px, 1.3vw, 11px)", marginBottom: "clamp(8px, 2vw, 16px)" }}>
               Ideas & Perspectives
@@ -49,12 +58,29 @@ export default function Journal() {
             <span>All Articles</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </Link>
-        </div>
+        </motion.div>
 
         {/* Always 3 columns */}
-        <div className="grid grid-cols-3" style={{ gap: "clamp(12px, 3.5vw, 40px)" }}>
+        <motion.div 
+          className="grid grid-cols-3" 
+          style={{ gap: "clamp(12px, 3.5vw, 40px)" }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.2 } }
+          }}
+        >
           {posts.map((post) => (
-            <article key={post.id} className="group">
+            <motion.article 
+              key={post.id} 
+              className="group"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
+            >
               <div className="relative img-zoom overflow-hidden"
                 style={{ height: "clamp(70px, 18vw, 256px)", marginBottom: "clamp(12px, 3vw, 20px)" }}>
                 <Image src={post.image} alt={post.title} fill
@@ -85,9 +111,9 @@ export default function Journal() {
                 className="text-[8px] sm:text-[10px] tracking-[0.15em] uppercase font-sans font-light text-[#3D2B1F] border-b border-[#3D2B1F]/30 pb-0.5 hover:border-[#3D2B1F] transition-colors">
                 Read More
               </Link>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
