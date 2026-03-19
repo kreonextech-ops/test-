@@ -120,21 +120,34 @@ function ProjectCard({ project, colSpan, rowSpan }: {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#1a130b]/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
       <div
-        className="absolute right-2 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400"
-        style={{ bottom: "clamp(6px, 1.5vw, 24px)", left: "clamp(6px, 1.5vw, 24px)" }}
+        className="absolute inset-x-0 bottom-0 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 flex flex-col items-start"
+        style={{ padding: "clamp(12px, 3vw, 32px)" }}
       >
         <p
           className="tracking-[0.15em] uppercase text-[#C8BBA8] font-sans"
-          style={{ fontSize: "clamp(6px, 1vw, 9px)", marginBottom: "clamp(2px, 0.4vw, 5px)" }}
+          style={{ fontSize: "clamp(7px, 1.2vw, 11px)", marginBottom: "clamp(4px, 1vw, 8px)" }}
         >
-          {project.category} · {project.location}
+          {project.category}
         </p>
         <h3
           className="font-serif text-[#FAF7F2] font-light leading-tight"
-          style={{ fontSize: "clamp(9px, 2vw, 20px)" }}
+          style={{ fontSize: "clamp(11px, 2.5vw, 24px)", marginBottom: "clamp(8px, 2vw, 20px)" }}
         >
           {project.title}
         </h3>
+        <Link
+          href={`/portfolio/${project.slug}`}
+          className="inline-flex items-center gap-2 font-sans font-light uppercase tracking-[0.2em] transition-all duration-300 group/btn"
+          style={{
+            background: "#C9A87C",
+            color: "#FAF5EC",
+            padding: "clamp(6px, 1.3vw, 12px) clamp(12px, 3vw, 24px)",
+            fontSize: "clamp(7px, 1.2vw, 10px)",
+          }}
+        >
+          <span>View Project</span>
+          <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+        </Link>
       </div>
     </div>
   );
@@ -242,13 +255,26 @@ export default function Portfolio() {
                 />
                 {/* Gradient + label */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a130b]/80 via-transparent to-transparent" />
-                <div className="absolute" style={{ bottom: "clamp(12px, 4vw, 24px)", left: "clamp(12px, 4vw, 24px)", right: "12px" }}>
-                  <p className="tracking-[0.15em] uppercase text-[#C8BBA8] font-sans font-light" style={{ fontSize: "9px", marginBottom: "4px" }}>
-                    {project.category} · {project.location}
+                <div className="absolute" style={{ bottom: "clamp(16px, 5vw, 32px)", left: "clamp(16px, 5vw, 32px)", right: "16px" }}>
+                  <p className="tracking-[0.15em] uppercase text-[#C8BBA8] font-sans font-light" style={{ fontSize: "10px", marginBottom: "6px" }}>
+                    {project.category}
                   </p>
-                  <h3 className="font-serif text-[#FAF7F2] font-light leading-tight" style={{ fontSize: "16px" }}>
+                  <h3 className="font-serif text-[#FAF7F2] font-light leading-tight" style={{ fontSize: "20px", marginBottom: "12px" }}>
                     {project.title}
                   </h3>
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    className="inline-flex items-center gap-2 font-sans font-light uppercase tracking-[0.2em]"
+                    style={{
+                      background: "#C9A87C",
+                      color: "#FAF5EC",
+                      padding: "8px 16px",
+                      fontSize: "9px",
+                    }}
+                  >
+                    <span>View Project</span>
+                    <span>→</span>
+                  </Link>
                 </div>
               </div>
             ))}

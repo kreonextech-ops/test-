@@ -63,13 +63,13 @@ export default function AboutUrbanSaajh() {
 
           {/* Heading */}
           <h2 className="font-serif text-white leading-tight"
-            style={{ fontSize: "clamp(1.4rem, 4.5vw, 3.5rem)", marginBottom: "clamp(10px, 2.5vw, 28px)", fontWeight: 300 }}>
-            Interior<br />Design
+            style={{ fontSize: "clamp(2rem, 6vw, 4.8rem)", marginBottom: "clamp(12px, 3vw, 32px)", fontWeight: 300 }}>
+            Design with<br />Clarity & Purpose
           </h2>
 
           {/* Intro paragraph */}
           <p className="font-sans text-white/75 leading-relaxed"
-            style={{ fontSize: "clamp(8px, 1.5vw, 13px)", marginBottom: "clamp(12px, 3vw, 28px)", fontWeight: 300 }}>
+            style={{ fontSize: "clamp(11px, 2vw, 17px)", marginBottom: "clamp(14px, 3.5vw, 32px)", fontWeight: 300 }}>
             I keep things simple — clarity first. We talk budget upfront, because Pinterest rooms and
             luxury finishes aren&apos;t &ldquo;low-cost&rdquo;. If you want that look, the investment has to match.
             I don&apos;t sugarcoat; I guide.
@@ -77,15 +77,15 @@ export default function AboutUrbanSaajh() {
 
           {/* Point 1 */}
           <div style={{ marginBottom: "clamp(10px, 2.5vw, 20px)" }}>
-            <div className="flex items-center gap-2" style={{ marginBottom: "clamp(4px, 1vw, 8px)" }}>
-              <span style={{ width: "clamp(6px, 1vw, 8px)", height: "clamp(6px, 1vw, 8px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
+            <div className="flex items-center gap-2" style={{ marginBottom: "clamp(6px, 1.2vw, 12px)" }}>
+              <span style={{ width: "clamp(8px, 1.2vw, 10px)", height: "clamp(8px, 1.2vw, 10px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
               <h3 className="font-serif text-white/90 italic"
-                style={{ fontSize: "clamp(10px, 1.8vw, 17px)", fontWeight: 300 }}>
+                style={{ fontSize: "clamp(14px, 2.2vw, 22px)", fontWeight: 300 }}>
                 Space matters.
               </h3>
             </div>
             <p className="font-sans text-white/65 leading-relaxed"
-              style={{ fontSize: "clamp(7px, 1.3vw, 12px)", fontWeight: 300, paddingLeft: "clamp(10px, 2vw, 18px)" }}>
+              style={{ fontSize: "clamp(10px, 1.7vw, 16px)", fontWeight: 300, paddingLeft: "clamp(14px, 2.5vw, 24px)" }}>
               You can&apos;t expect a 3BHK feel inside 1000 sq ft. Interiors are built on real dimensions,
               movement flow, and comfort. If the space is tight, something has to give — and I&apos;ll tell you that honestly.
             </p>
@@ -95,15 +95,15 @@ export default function AboutUrbanSaajh() {
 
           {/* Point 2 */}
           <div style={{ marginBottom: "clamp(10px, 2.5vw, 20px)" }}>
-            <div className="flex items-center gap-2" style={{ marginBottom: "clamp(4px, 1vw, 8px)" }}>
-              <span style={{ width: "clamp(6px, 1vw, 8px)", height: "clamp(6px, 1vw, 8px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
+            <div className="flex items-center gap-2" style={{ marginBottom: "clamp(6px, 1.2vw, 12px)" }}>
+              <span style={{ width: "clamp(8px, 1.2vw, 10px)", height: "clamp(8px, 1.2vw, 10px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
               <h3 className="font-serif text-white/90 italic"
-                style={{ fontSize: "clamp(10px, 1.8vw, 17px)", fontWeight: 300 }}>
+                style={{ fontSize: "clamp(14px, 2.2vw, 22px)", fontWeight: 300 }}>
                 Designer vs. Contractor.
               </h3>
             </div>
             <p className="font-sans text-white/65 leading-relaxed"
-              style={{ fontSize: "clamp(7px, 1.3vw, 12px)", fontWeight: 300, paddingLeft: "clamp(10px, 2vw, 18px)" }}>
+              style={{ fontSize: "clamp(10px, 1.7vw, 16px)", fontWeight: 300, paddingLeft: "clamp(14px, 2.5vw, 24px)" }}>
               Your contractor can &ldquo;manage&rdquo;, but a designer brings planning, proportion, detailing,
               and long-term value. Skipping design saves money now, but costs more later.
             </p>
@@ -120,11 +120,11 @@ export default function AboutUrbanSaajh() {
               borderRadius: "0 4px 4px 0"
             }}>
             <p className="uppercase text-[#C9A87C] font-sans font-light tracking-[0.2em]"
-              style={{ fontSize: "clamp(6px, 1vw, 9px)", marginBottom: "clamp(4px, 1vw, 8px)" }}>
+              style={{ fontSize: "clamp(9px, 1.3vw, 13px)", marginBottom: "clamp(6px, 1.2vw, 10px)" }}>
               Our USP
             </p>
             <p className="font-sans text-white leading-relaxed"
-              style={{ fontSize: "clamp(7px, 1.3vw, 12px)", fontWeight: 300 }}>
+              style={{ fontSize: "clamp(10px, 1.7vw, 16px)", fontWeight: 300 }}>
               At <span style={{ color: "#C9A87C", fontWeight: 400 }}>Urban Saajh</span>, clarity, honesty,
               and detailed planning isn&apos;t extra — it&apos;s our USP. We focus on every parameter that
               actually matters, so when you hire us, you&apos;re choosing{" "}

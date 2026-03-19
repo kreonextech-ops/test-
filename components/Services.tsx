@@ -42,7 +42,7 @@ const services = [
     slug: "customized-furniture-false-ceiling",
     title: "Customized Furniture & False Ceiling",
     description: "Built-to-measure furniture and ceiling work crafted to your exact space dimensions — no compromise on proportion, finish, or detailing.",
-    image: "/images/services/custom-furniture.png",
+    image: "/images/services/service-5-refined.png",
     icon: "05",
   },
   {
@@ -135,7 +135,7 @@ export default function Services() {
               <span style={{ width: "clamp(6px, 1vw, 8px)", height: "clamp(6px, 1vw, 8px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
               <h3 className="font-serif italic"
                 style={{
-                  fontSize: "clamp(11px, 2.2vw, 20px)", color: "#fff", fontWeight: 300,
+                  fontSize: "clamp(14px, 2.8vw, 26px)", color: "#fff", fontWeight: 300,
                   opacity: fading ? 0 : 1, transition: "opacity 0.3s"
                 }}>
                 {services[activeIndex].title}
@@ -163,15 +163,15 @@ export default function Services() {
                   borderLeftColor: i === activeIndex ? "#C9A87C" : "transparent",
                 }}>
                 <span className="font-serif font-light flex-shrink-0"
-                  style={{ fontSize: "clamp(9px, 1.5vw, 14px)", color: i === activeIndex ? "#C9A87C" : "rgba(201,168,124,0.4)" }}>
+                  style={{ fontSize: "clamp(11px, 2vw, 18px)", color: i === activeIndex ? "#C9A87C" : "rgba(201,168,124,0.4)" }}>
                   {svc.icon}
                 </span>
                 <span className="font-sans font-light"
-                  style={{ fontSize: "clamp(8px, 1.4vw, 13px)", color: i === activeIndex ? "#fff" : "rgba(255,255,255,0.5)", transition: "color 0.2s" }}>
+                  style={{ fontSize: "clamp(11px, 1.8vw, 18px)", color: i === activeIndex ? "#fff" : "rgba(255,255,255,0.5)", transition: "color 0.2s" }}>
                   {svc.title}
                 </span>
                 {i === activeIndex && (
-                  <span style={{ marginLeft: "auto", color: "#C9A87C", fontSize: "clamp(9px, 1.4vw, 13px)", flexShrink: 0 }}>→</span>
+                  <span style={{ marginLeft: "auto", color: "#C9A87C", fontSize: "clamp(11px, 1.8vw, 17px)", flexShrink: 0 }}>→</span>
                 )}
               </button>
             ))}
@@ -183,10 +183,10 @@ export default function Services() {
           <Link href="#contact"
             className="inline-flex items-center self-start transition-all duration-300 group font-sans font-light uppercase tracking-[0.2em]"
             style={{
-              gap: "clamp(6px, 1.5vw, 10px)",
+              gap: "clamp(8px, 1.8vw, 14px)",
               border: "1px solid rgba(201,168,124,0.5)", color: "#C9A87C",
-              padding: "clamp(6px, 1.3vw, 12px) clamp(12px, 3vw, 24px)",
-              fontSize: "clamp(7px, 1.2vw, 10px)"
+              padding: "clamp(8px, 1.8vw, 16px) clamp(16px, 3.5vw, 32px)",
+              fontSize: "clamp(10px, 1.5vw, 14px)"
             }}>
             <span>Book a Consultation</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -205,12 +205,12 @@ export default function Services() {
             style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
           {/* Section label + heading */}
-          <div style={{ marginBottom: "clamp(12px, 3vw, 28px)" }}>
+          <div style={{ marginBottom: "clamp(16px, 4vw, 36px)" }}>
             <p className="uppercase font-sans font-light tracking-[0.25em]"
-              style={{ fontSize: "clamp(7px, 1.2vw, 10px)", color: "#C9A87C", marginBottom: "clamp(4px, 1vw, 10px)" }}>
+              style={{ fontSize: "clamp(9px, 1.5vw, 13px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.5vw, 12px)" }}>
               What We Offer
             </p>
-            <h2 className="font-serif font-light leading-tight" style={{ fontSize: "clamp(1.2rem, 4vw, 3rem)", color: "#3D2B1F" }}>
+            <h2 className="font-serif font-light leading-tight" style={{ fontSize: "clamp(1.8rem, 5.5vw, 4.2rem)", color: "#3D2B1F" }}>
               Our Services
             </h2>
           </div>
@@ -247,13 +247,13 @@ export default function Services() {
               style={{
                 bottom: 0,
                 background: "linear-gradient(to top, rgba(13,59,46,0.92) 0%, rgba(13,59,46,0.6) 60%, transparent 100%)",
-                padding: "clamp(20px, 5vw, 40px) clamp(10px, 2.5vw, 20px) clamp(10px, 2.5vw, 18px)",
+                padding: "clamp(24px, 6vw, 48px) clamp(14px, 3vw, 28px) clamp(12px, 3vw, 24px)",
                 clipPath: "url(#arch-clip)",
                 zIndex: 10,
               }}>
               <p className="font-sans font-light leading-relaxed"
                 style={{
-                  fontSize: "clamp(8px, 1.3vw, 12px)",
+                  fontSize: "clamp(11px, 1.8vw, 17px)",
                   color: "rgba(255,255,255,0.88)",
                   opacity: fading ? 0 : 1,
                   transition: "opacity 0.4s",
@@ -293,13 +293,13 @@ export default function Services() {
                 </svg>
               </button>
             ))}
-            <div style={{ width: "1px", height: "clamp(12px, 2.5vw, 20px)", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
+            <div style={{ width: "1px", height: "clamp(16px, 3vw, 24px)", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
             <span className="font-sans font-light tabular-nums whitespace-nowrap"
-              style={{ fontSize: "clamp(7px, 1.3vw, 11px)", color: "#C9A87C" }}>
+              style={{ fontSize: "clamp(10px, 1.6vw, 15px)", color: "#C9A87C" }}>
               <span style={{ color: "#3D2B1F" }}>{String(activeIndex + 1).padStart(2, "0")}</span>
               {" / "}{String(services.length).padStart(2, "0")}
             </span>
-            <div style={{ width: "1px", height: "clamp(12px, 2.5vw, 20px)", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
+            <div style={{ width: "1px", height: "clamp(16px, 3vw, 24px)", background: "rgba(201,168,124,0.4)", flexShrink: 0 }} />
             {/* Dot pills */}
             <div className="flex flex-row items-center" style={{ gap: "clamp(3px, 0.7vw, 5px)" }}>
               {services.map((_, i) => (
@@ -325,8 +325,8 @@ export default function Services() {
               style={{
                 background: "#C9A87C",
                 color: "#FAF5EC",
-                padding: "clamp(8px, 1.8vw, 14px) clamp(12px, 3vw, 24px)",
-                fontSize: "clamp(7px, 1.2vw, 10px)",
+                padding: "clamp(10px, 2vw, 16px) clamp(16px, 4vw, 32px)",
+                fontSize: "clamp(9px, 1.5vw, 13px)",
                 opacity: fading ? 0.6 : 1,
                 transition: "opacity 0.3s, background 0.3s",
               }}
