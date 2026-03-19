@@ -6,7 +6,7 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import AtmosphereSection from "@/components/AtmosphereSection";
-import About from "@/components/About";
+import AboutUrbanSaajh from "@/components/AboutUrbanSaajh";
 import Journal from "@/components/Journal";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -25,17 +25,17 @@ export default function Home() {
         {/* 1. Hero — moody full-screen with rustic shelf photography */}
         <Hero />
 
-        {/* 2. Services — arch slider + large feature image (matches screenshot middle) */}
+        {/* 2. About Urban Saajh — clarity, honesty, USP (Moved from below) */}
+        <AboutUrbanSaajh />
+
+        {/* 3. Services — arch slider + large feature image */}
         <Services />
 
-        {/* 3. Portfolio grid — editorial masonry-style project showcase */}
+        {/* 4. Portfolio grid — editorial masonry-style project showcase */}
         <Portfolio />
 
-        {/* 4. Atmospheric full-width section — dark room/fireplace (matches screenshot bottom) */}
+        {/* 5. Atmospheric full-width section — dark room/fireplace */}
         <AtmosphereSection />
-
-        {/* 5. About the studio */}
-        <About />
 
         {/* 6. Journal */}
         <Journal />
