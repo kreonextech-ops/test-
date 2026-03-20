@@ -26,7 +26,7 @@ export default function Hero() {
       >
         <Image
           src="/images/europa/lounge Room 4.jpg"
-          alt="Artfully curated interior - Urban Saajh by Tej"
+          alt="Luxury interior design by Urban Saajh — lounge room designed in Bagdogra, North Bengal"
           fill priority
           className="object-cover object-center"
           sizes="100vw"
@@ -50,22 +50,22 @@ export default function Hero() {
           >
             <span className="divider bg-[#C8BBA8]/60" />
             <span className="tracking-[0.25em] uppercase text-[#C8BBA8] font-sans font-light" style={{ fontSize: "clamp(8px, 1.3vw, 11px)" }}>
-              Luxury Interior Design
+              Bagdogra · Siliguri · North Bengal
             </span>
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             className="font-serif font-light text-[#FAF7F2] body-tight mb-6 sm:mb-8"
             style={{ fontSize: "clamp(1.6rem, 5vw, 4.5rem)" }}
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
-            Artfully Curated,
+            Interior Designer
             <br />
-            <em className="italic font-light">Naturally Inspired</em>
+            <em className="italic font-light">in Bagdogra & Siliguri</em>
             <br />
-            Interiors
+            North Bengal
           </motion.h1>
 
           <motion.div

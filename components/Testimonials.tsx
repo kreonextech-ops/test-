@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 
 export default function Testimonials() {
@@ -132,20 +132,28 @@ export default function Testimonials() {
             </h2>
 
             <div className="relative overflow-hidden" style={{ minHeight: "clamp(140px, 20vw, 200px)" }}>
-              <div style={slideStyle}>
-                <p className="font-serif italic leading-relaxed text-[#FAF5EC]"
-                  style={{ fontSize: "clamp(12px, 1.6vw, 17px)", marginBottom: "clamp(10px, 1.5vw, 20px)" }}>
-                  &ldquo;{testimonials[activeTestimony].quote}&rdquo;
-                </p>
-                <div>
-                  <p className="font-sans font-medium text-[#C9A87C]" style={{ fontSize: "clamp(11px, 1.3vw, 14px)" }}>
-                    {testimonials[activeTestimony].author}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTestimony}
+                  initial={{ opacity: 0, x: dir === "left" ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: dir === "left" ? -20 : 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <p className="font-serif italic leading-relaxed text-[#FAF5EC]"
+                    style={{ fontSize: "clamp(12px, 1.6vw, 17px)", marginBottom: "clamp(10px, 1.5vw, 20px)" }}>
+                    &ldquo;{testimonials[activeTestimony].quote}&rdquo;
                   </p>
-                  <p className="font-sans font-light text-[#FAF5EC]/60" style={{ fontSize: "clamp(9px, 1.1vw, 12px)" }}>
-                    {testimonials[activeTestimony].project}
-                  </p>
-                </div>
-              </div>
+                  <div>
+                    <p className="font-sans font-medium text-[#C9A87C]" style={{ fontSize: "clamp(11px, 1.3vw, 14px)" }}>
+                      {testimonials[activeTestimony].author}
+                    </p>
+                    <p className="font-sans font-light text-[#FAF5EC]/60" style={{ fontSize: "clamp(9px, 1.1vw, 12px)" }}>
+                      {testimonials[activeTestimony].project}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Navigation Dots */}

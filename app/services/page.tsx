@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
   {
@@ -79,6 +80,19 @@ const services = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0 }
+};
+
 export default function ServicesPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = services[activeIndex];
@@ -90,52 +104,93 @@ export default function ServicesPage() {
       {/* ── HERO ── */}
       <section className="relative overflow-hidden" style={{ background: "#0D3B2E", paddingTop: "clamp(80px, 14vw, 140px)", paddingBottom: "clamp(24px, 5vw, 56px)" }}>
         <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none">
-          <div style={{ width: "clamp(60px, 15vw, 160px)", height: "clamp(5px, 1vw, 8px)", background: "#C9A87C" }} />
-          <div style={{ width: "clamp(60px, 15vw, 160px)", height: "clamp(5px, 1vw, 8px)", background: "#C9A87C" }} />
+          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1, delay: 0.3 }} style={{ originX: 0, width: "clamp(60px, 15vw, 160px)", height: "clamp(5px, 1vw, 8px)", background: "#C9A87C" }} />
+          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1, delay: 0.3 }} style={{ originX: 1, width: "clamp(60px, 15vw, 160px)", height: "clamp(5px, 1vw, 8px)", background: "#C9A87C" }} />
         </div>
         <div style={{ padding: "0 clamp(16px, 5vw, 80px)" }}>
-          <p className="uppercase font-sans font-light tracking-[0.3em]"
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="uppercase font-sans font-light tracking-[0.3em]"
             style={{ fontSize: "clamp(10px, 1.4vw, 13px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.5vw, 12px)" }}>
             Capabilities
-          </p>
-          <h1 className="font-serif font-light text-white leading-[1.05]"
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-serif font-light text-white leading-[1.05]"
             style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}>
             What We<br />
             <em className="italic" style={{ color: "#C9A87C" }}>Offer</em>
-          </h1>
+          </motion.h1>
         </div>
       </section>
 
-      {/* ── MAIN — list left, image + detail right ── */}
-      <section className="w-full overflow-hidden">
-        <div className="grid grid-cols-2" style={{ minHeight: "clamp(600px, 110vw, 1000px)", gridTemplateColumns: "2fr 3fr" }}>
+      {/* ── MAIN ── */}
+      <section className="w-full">
+        <div className="flex flex-col md:grid md:grid-cols-[2fr_3fr]" style={{ minHeight: "clamp(600px, 110vw, 1000px)" }}>
 
-          {/* LEFT: dark green — service list ── */}
-          <div className="relative flex flex-col overflow-hidden"
-            style={{ background: "#0D3B2E", padding: "clamp(24px, 5vw, 56px) clamp(14px, 3.5vw, 48px)" }}>
-            <div className="absolute top-0 right-0"
+          <div className="relative flex flex-col md:h-full z-20"
+            style={{ 
+              background: "#0D3B2E", 
+              padding: "clamp(16px, 4vw, 56px) clamp(14px, 3.5vw, 48px)",
+              position: "sticky",
+              top: "0",
+            }}>
+            <div className="hidden md:block absolute top-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
-            <div className="absolute bottom-0 left-0"
+            <div className="hidden md:block absolute bottom-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
             <p className="uppercase font-sans font-light tracking-[0.25em]"
               style={{ fontSize: "clamp(9px, 1.3vw, 12px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.5vw, 14px)" }}>
               Our Services
             </p>
-            <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 20px)" }} />
+            <div className="hidden md:block" style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 20px)" }} />
 
-            {/* List */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "clamp(4px, 0.8vw, 8px)", flex: 1 }}>
+            {/* Mobile Scrollable Tabs */}
+            <div className="flex md:hidden overflow-x-auto no-scrollbar gap-4 pb-4 -mx-4 px-4">
               {services.map((svc, i) => (
                 <button
                   key={svc.id}
+                  onClick={() => {
+                    setActiveIndex(i);
+                    // Scroll to detail on mobile
+                    document.getElementById("service-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="whitespace-nowrap flex-shrink-0 font-sans font-light transition-all duration-300"
+                  style={{
+                    fontSize: "12px",
+                    color: i === activeIndex ? "#C9A87C" : "rgba(255,255,255,0.4)",
+                    borderBottom: `1px solid ${i === activeIndex ? "#C9A87C" : "transparent"}`,
+                    paddingBottom: "4px",
+                    tracking: "0.1em"
+                  }}
+                >
+                  {svc.title}
+                </button>
+              ))}
+            </div>
+
+            {/* Desktop Vertical List */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="hidden md:flex flex-col gap-2 flex-1"
+            >
+              {services.map((svc, i) => (
+                <motion.button
+                  key={svc.id}
+                  variants={itemVariants}
                   onClick={() => setActiveIndex(i)}
-                  className="text-left w-full flex items-center transition-all duration-200"
+                  className="text-left w-full flex items-center transition-all duration-200 group"
                   style={{
                     gap: "clamp(8px, 1.8vw, 16px)",
                     padding: "clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px)",
                     background: i === activeIndex ? "rgba(201,168,124,0.12)" : "transparent",
-                    borderTop: "none", borderRight: "none", borderBottom: "none",
                     borderLeft: `2px solid ${i === activeIndex ? "#C9A87C" : "transparent"}`,
                     borderRadius: "0 4px 4px 0",
                     cursor: "pointer",
@@ -158,14 +213,14 @@ export default function ServicesPage() {
                   {i === activeIndex && (
                     <span style={{ color: "#C9A87C", fontSize: "clamp(12px, 1.6vw, 16px)", flexShrink: 0 }}>→</span>
                   )}
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
 
-            <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", margin: "clamp(10px, 2.5vw, 20px) 0" }} />
+            <div className="hidden md:block" style={{ height: "1px", background: "rgba(201,168,124,0.3)", margin: "clamp(10px, 2.5vw, 20px) 0" }} />
 
-            {/* Counter + CTA */}
-            <div className="flex items-center justify-between">
+            {/* Counter + CTA (Desktop only) */}
+            <div className="hidden md:flex items-center justify-between">
               <span className="font-sans font-light tabular-nums"
                 style={{ fontSize: "clamp(10px, 1.4vw, 13px)", color: "#C9A87C" }}>
                 <span style={{ color: "#fff" }}>{String(activeIndex + 1).padStart(2, "0")}</span>
@@ -180,77 +235,103 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          {/* RIGHT: cream — active image + detail ── */}
-          <div className="relative flex flex-col"
-            style={{ background: "#FAF5EC", padding: "clamp(24px, 5vw, 56px) clamp(20px, 4vw, 52px) clamp(24px, 5vw, 56px) clamp(14px, 3vw, 36px)" }}>
+          {/* RIGHT: Active Detail */}
+          <div id="service-detail" className="relative flex flex-col"
+            style={{ 
+              background: "#FAF5EC", 
+              padding: "clamp(32px, 8vw, 56px) clamp(20px, 4vw, 52px) clamp(40px, 8vw, 56px) clamp(16px, 4vw, 36px)" 
+            }}>
             <div className="absolute top-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
             <div className="absolute bottom-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
-            {/* Image */}
-            <div className="relative overflow-hidden" style={{ minHeight: "clamp(200px, 42vw, 500px)", marginBottom: "clamp(16px, 3.5vw, 28px)" }}>
-              <Image
+            <AnimatePresence mode="wait">
+              <motion.div
                 key={active.id}
-                src={active.image}
-                alt={active.title}
-                fill
-                className="object-cover object-center"
-                sizes="60vw"
-                style={{ transition: "opacity 0.4s ease" }}
-              />
-              {/* Overlay with ghost number */}
-              <div className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(13,59,46,0.88) 0%, rgba(13,59,46,0.3) 40%, transparent 70%)" }} />
-              <div className="absolute inset-x-0 bottom-0"
-                style={{ padding: "clamp(32px, 7vw, 64px) clamp(18px, 4vw, 32px) clamp(16px, 3vw, 24px)" }}>
-                <span className="font-serif font-light block"
-                  style={{ fontSize: "clamp(36px, 8vw, 80px)", color: "rgba(255,255,255,0.15)", lineHeight: 1, marginBottom: "clamp(2px, 0.5vw, 5px)" }}>
-                  {active.icon}
-                </span>
-                <p className="uppercase font-sans font-light tracking-[0.2em]"
-                  style={{ fontSize: "clamp(10px, 1.3vw, 12px)", color: "#C9A87C", marginBottom: "clamp(4px, 0.8vw, 8px)", transition: "opacity 0.3s" }}>
-                  {active.subtitle}
-                </p>
-                <h3 className="font-serif font-light text-white leading-tight"
-                  style={{ fontSize: "clamp(18px, 3vw, 32px)", transition: "opacity 0.3s" }}>
-                  {active.title}
-                </h3>
-              </div>
-            </div>
-
-            {/* Description + features */}
-            <div className="grid grid-cols-2" style={{ gap: "clamp(16px, 4vw, 36px)" }}>
-              <div>
-                <p className="uppercase font-sans font-light tracking-[0.22em]"
-                  style={{ fontSize: "clamp(9px, 1.2vw, 11px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.2vw, 12px)" }}>
-                  Overview
-                </p>
-                <p className="font-sans font-light leading-[1.85] text-[#6B4F3A]"
-                  style={{ fontSize: "clamp(13px, 1.6vw, 16px)", transition: "opacity 0.3s" }}>
-                  {active.description}
-                </p>
-              </div>
-
-              <div>
-                <p className="uppercase font-sans font-light tracking-[0.22em]"
-                  style={{ fontSize: "clamp(9px, 1.2vw, 11px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.2vw, 12px)" }}>
-                  What&apos;s Included
-                </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1vw, 10px)" }}>
-                  {active.features.map((f) => (
-                    <div key={f} className="flex items-start"
-                      style={{ gap: "clamp(6px, 1.2vw, 10px)" }}>
-                      <span style={{ width: "clamp(5px, 0.9vw, 7px)", height: "clamp(5px, 0.9vw, 7px)", background: "#C9A87C", flexShrink: 0, marginTop: "clamp(5px, 0.8vw, 7px)" }} />
-                      <span className="font-sans font-light text-[#3D2B1F]"
-                        style={{ fontSize: "clamp(12px, 1.5vw, 14px)", lineHeight: 1.6 }}>
-                        {f}
-                      </span>
-                    </div>
-                  ))}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col h-full"
+              >
+                {/* Image */}
+                <div className="relative overflow-hidden" style={{ minHeight: "clamp(200px, 42vw, 500px)", marginBottom: "clamp(16px, 3.5vw, 28px)" }}>
+                  <Image
+                    src={active.image}
+                    alt={active.title}
+                    fill
+                    className="object-cover object-center"
+                    sizes="60vw"
+                  />
+                  {/* Overlay with ghost number */}
+                  <div className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(13,59,46,0.88) 0%, rgba(13,59,46,0.3) 40%, transparent 70%)" }} />
+                  <div className="absolute inset-x-0 bottom-0"
+                    style={{ padding: "clamp(32px, 7vw, 64px) clamp(18px, 4vw, 32px) clamp(16px, 3vw, 24px)" }}>
+                    <span className="font-serif font-light block"
+                      style={{ fontSize: "clamp(36px, 8vw, 80px)", color: "rgba(255,255,255,0.15)", lineHeight: 1, marginBottom: "clamp(2px, 0.5vw, 5px)" }}>
+                      {active.icon}
+                    </span>
+                    <p className="uppercase font-sans font-light tracking-[0.2em]"
+                      style={{ fontSize: "clamp(10px, 1.3vw, 12px)", color: "#C9A87C", marginBottom: "clamp(4px, 0.8vw, 8px)" }}>
+                      {active.subtitle}
+                    </p>
+                    <h3 className="font-serif font-light text-white leading-tight"
+                      style={{ fontSize: "clamp(18px, 3vw, 32px)" }}>
+                      {active.title}
+                    </h3>
+                  </div>
                 </div>
-              </div>
-            </div>
+
+                {/* Description + features (Mobile Swipe / Desktop Grid) */}
+                <div className="flex flex-col md:grid md:grid-cols-2" style={{ gap: "clamp(24px, 4vw, 36px)" }}>
+                  <div className="max-w-prose">
+                    <p className="uppercase font-sans font-light tracking-[0.22em]"
+                      style={{ fontSize: "clamp(9px, 1.2vw, 11px)", color: "#C9A87C", marginBottom: "clamp(6px, 1.2vw, 12px)" }}>
+                      Overview
+                    </p>
+                    <p className="font-sans font-light leading-[1.85] text-[#6B4F3A]"
+                      style={{ fontSize: "clamp(14px, 1.6vw, 16px)" }}>
+                      {active.description}
+                    </p>
+                  </div>
+
+                  {/* Horizontal Scroll for features on mobile? Or just a clean list. The user mentioned "description should be swiped". 
+                      I'll put the features in a horizontal swipeable section on mobile to save space. */}
+                  <div className="relative">
+                    <p className="uppercase font-sans font-light tracking-[0.22em]"
+                      style={{ fontSize: "clamp(9px, 1.2vw, 11px)", color: "#C9A87C", marginBottom: "clamp(10px, 1.2vw, 14px)" }}>
+                      What&apos;s Included
+                    </p>
+                    <div className="flex md:flex-col overflow-x-auto no-scrollbar gap-4 md:gap-3 px-1 -mx-1"
+                      style={{ paddingBottom: "10px" }}>
+                      {active.features.map((f, idx) => (
+                          <motion.div
+                            key={f}
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                            className="flex items-start flex-shrink-0 w-[70vw] md:w-auto"
+                            style={{ 
+                              gap: "10px", 
+                              background: "rgba(201,168,124,0.06)", 
+                              padding: "12px", 
+                              borderLeft: "2px solid #C9A87C",
+                              borderRadius: "0 4px 4px 0"
+                            }}
+                          >
+                            <span className="font-sans font-light text-[#3D2B1F]"
+                              style={{ fontSize: "13px", lineHeight: 1.5 }}>
+                              {f}
+                            </span>
+                          </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
@@ -262,13 +343,20 @@ export default function ServicesPage() {
           <div style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-3" style={{ gap: "clamp(16px, 4vw, 48px)" }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {[
             { num: "01", title: "Transparent Pricing", body: "We talk budget upfront. No surprises at handover. You know the number before the first wall is touched." },
             { num: "02", title: "Single Point of Contact", body: "One number. One email. One person who owns every decision from design to delivery." },
             { num: "03", title: "Real-Life Ready", body: "We design for how you actually live — not for a showroom or a photoshoot." },
-          ].map((u) => (
-            <div key={u.num} style={{ borderLeft: "2px solid #C9A87C", padding: "clamp(12px, 2.8vw, 24px) clamp(14px, 3vw, 28px)" }}>
+          ].map((u, i) => (
+            <motion.div
+              key={u.num}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.2 }}
+              viewport={{ once: true }}
+              style={{ borderLeft: "2px solid #C9A87C", padding: "clamp(12px, 2.8vw, 24px) clamp(14px, 3vw, 28px)" }}
+            >
               <span className="font-serif font-light block"
                 style={{ fontSize: "clamp(24px, 6vw, 56px)", color: "rgba(201,168,124,0.2)", lineHeight: 1, marginBottom: "clamp(6px, 1.5vw, 12px)" }}>
                 {u.num}
@@ -284,7 +372,7 @@ export default function ServicesPage() {
                 style={{ fontSize: "clamp(12px, 1.5vw, 14px)", color: "rgba(255,255,255,0.55)", paddingLeft: "clamp(14px, 2.2vw, 20px)" }}>
                 {u.body}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
 

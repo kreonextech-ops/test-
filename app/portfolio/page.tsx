@@ -121,37 +121,57 @@ export default function PortfolioPage() {
 
       {/* ── MASONRY GRID ── */}
       <section className="px-6 md:px-12 pb-32">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
+        <motion.div 
+          layout
+          className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8"
+        >
           <AnimatePresence mode="popLayout">
-            {filteredImages.map((img) => (
+            {filteredImages.map((img, idx) => (
               <motion.div
                 layout
                 key={img.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: idx * 0.05,
+                  ease: [0.215, 0.61, 0.355, 1] 
+                }}
                 className="relative group cursor-pointer break-inside-avoid"
               >
-                <div className="relative overflow-hidden bg-[#0D3B2E]/5 rounded-sm">
+                <div className="relative overflow-hidden bg-[#0D3B2E]/5 rounded-sm shadow-sm group-hover:shadow-xl transition-shadow duration-500">
                   <Image
                     src={img.path}
                     alt={img.title}
                     width={800}
                     height={1000}
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 grayscale-[30%] group-hover:grayscale-0"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[15%] group-hover:grayscale-0"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                    <p className="text-[#C9A87C] uppercase tracking-[0.2em] text-[10px] mb-2">{img.category}</p>
-                    <h3 className="text-white font-serif text-xl italic">{img.title}</h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                    <motion.p 
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      className="text-[#C9A87C] uppercase tracking-[0.2em] text-[10px] mb-2"
+                    >
+                      {img.category}
+                    </motion.p>
+                    <motion.h3 
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                      className="text-white font-serif text-xl italic"
+                    >
+                      {img.title}
+                    </motion.h3>
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </section>
 
       <Footer />

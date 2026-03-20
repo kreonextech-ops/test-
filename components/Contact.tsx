@@ -144,11 +144,14 @@ export default function Contact() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut", delay: 0.2 } }
                 }}
               >
-                <button className="inline-flex items-center gap-2 sm:gap-3 border border-[#FAF7F2]/30 text-[#FAF7F2] tracking-[0.2em] uppercase font-sans font-light hover:bg-[#FAF7F2] hover:text-[#2A1F14] transition-all duration-400 group w-full justify-center"
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center gap-2 sm:gap-3 border border-[#FAF7F2]/30 text-[#FAF7F2] tracking-[0.2em] uppercase font-sans font-light hover:bg-[#FAF7F2] hover:text-[#2A1F14] transition-all duration-400 group w-full justify-center"
                   style={{ padding: "clamp(8px, 1.8vw, 14px)", fontSize: "clamp(8px, 1.4vw, 10px)" }}>
                   <span>Send Enquiry</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
+                </motion.button>
               </motion.div>
             </div>
           </motion.div>

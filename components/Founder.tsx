@@ -274,7 +274,14 @@ export default function Founder() {
             </p>
 
             {/* Pillars */}
-            <div 
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.15 } }
+              }}
               style={{ display: "flex", flexDirection: "column", gap: "clamp(5px, 1.3vw, 11px)", marginBottom: "clamp(12px, 3vw, 24px)" }}
             >
               {[
@@ -282,8 +289,12 @@ export default function Founder() {
                 { title: "Minimal Luxury", body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always." },
                 { title: "Built for Living", body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours." },
               ].map((item) => (
-                <div
+                <motion.div
                   key={item.title}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] } }
+                  }}
                   className="border-t border-white/20 pt-4"
                 >
                   <div className="flex items-center" style={{ gap: "clamp(5px, 1vw, 8px)", marginBottom: "clamp(2px, 0.5vw, 4px)" }}>
@@ -301,9 +312,9 @@ export default function Founder() {
                   >
                     {item.body}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* ── MOBILE: swipeable slide ── */}

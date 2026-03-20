@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const pillars = [
   {
@@ -20,17 +21,35 @@ const pillars = [
   },
 ];
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 }
+  }
+};
+
 export default function FounderPage() {
   return (
     <main className="relative min-h-screen" style={{ background: "#FAF5EC" }}>
       <Navbar />
 
-      {/* ── HERO — portrait left, intro right ── */}
+      {/* ── HERO ── */}
       <section className="w-full overflow-hidden">
-        <div className="grid grid-cols-2" style={{ minHeight: "clamp(480px, 100vw, 900px)", gridTemplateColumns: "3fr 2fr" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "clamp(480px, 100vw, 900px)", gridTemplateColumns: "3fr 2fr" }}>
 
           {/* Left: Tej's portrait */}
-          <div className="relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2 }}
+            className="relative overflow-hidden"
+          >
             <Image
               src="/image.jpeg"
               alt="Tejinder Singh Bhogal — Founder, Urban Saajh"
@@ -39,42 +58,54 @@ export default function FounderPage() {
               sizes="60vw"
               style={{ filter: "brightness(0.88)" }}
             />
-            {/* Bottom gradient */}
             <div className="absolute inset-0"
               style={{ background: "linear-gradient(to top, rgba(13,59,46,0.92) 0%, rgba(13,59,46,0.35) 40%, transparent 65%)" }} />
 
-            {/* Gold bars */}
             <div className="absolute top-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
             <div className="absolute bottom-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
 
-            {/* TB monogram */}
-            <div className="absolute"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, duration: 0.5 }}
+              className="absolute"
               style={{ top: "clamp(16px, 4vw, 40px)", right: "clamp(16px, 4vw, 40px)", width: "clamp(36px, 8vw, 64px)", height: "clamp(36px, 8vw, 64px)", background: "#C9A87C", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <span className="font-serif italic"
                 style={{ fontSize: "clamp(12px, 2.5vw, 22px)", color: "#0D3B2E", fontWeight: 300 }}>
                 TB
               </span>
-            </div>
+            </motion.div>
 
-            {/* Name badge */}
             <div className="absolute inset-x-0 bottom-0"
               style={{ padding: "clamp(36px, 8vw, 72px) clamp(16px, 4vw, 48px) clamp(16px, 4vw, 32px)" }}>
-              <p className="uppercase font-sans font-light tracking-[0.25em]"
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="uppercase font-sans font-light tracking-[0.25em]"
                 style={{ fontSize: "clamp(7px, 1.2vw, 10px)", color: "#C9A87C", marginBottom: "clamp(4px, 1vw, 8px)" }}>
                 Founder &amp; Principal Designer
-              </p>
-              <h1 className="font-serif font-light text-white leading-tight"
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+                className="font-serif font-light text-white leading-tight"
                 style={{ fontSize: "clamp(1.4rem, 4vw, 3.6rem)" }}>
                 Tejinder Singh<br />
                 <em className="italic" style={{ color: "#C9A87C" }}>Bhogal</em>
-              </h1>
+              </motion.h1>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: dark green intro */}
-          <div className="relative flex flex-col justify-center overflow-hidden"
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative flex flex-col justify-center overflow-hidden"
             style={{ background: "#0D3B2E", padding: "clamp(28px, 6vw, 72px) clamp(16px, 4vw, 52px)" }}>
             <div className="absolute top-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -92,21 +123,26 @@ export default function FounderPage() {
 
             <div style={{ height: "1px", background: "rgba(201,168,124,0.3)", marginBottom: "clamp(10px, 2.5vw, 24px)" }} />
 
-            <p className="font-sans font-light leading-[1.9]"
-              style={{ fontSize: "clamp(9px, 1.4vw, 13px)", color: "rgba(255,255,255,0.72)", marginBottom: "clamp(8px, 2vw, 18px)" }}>
-              For over a decade, I have been obsessed with the idea of &ldquo;Saajh&rdquo; — a union. A union between
-              functionality and aesthetics, between the space and the soul that inhabits it. At Urban Saajh,
-              we don&apos;t just build interiors; we curate legacies.
-            </p>
-            <p className="font-sans font-light leading-[1.9]"
-              style={{ fontSize: "clamp(9px, 1.4vw, 13px)", color: "rgba(255,255,255,0.72)", marginBottom: "clamp(14px, 3vw, 32px)" }}>
-              Every project I undertake is a personal commitment. I involve myself in the minute
-              details — from the grain of the wood to the temperature of the light. Because it&apos;s
-              the details that turn a project into a home.
-            </p>
+            <div className="space-y-6 mb-12">
+              <p className="font-sans font-light leading-[1.9]"
+                style={{ fontSize: "clamp(9px, 1.4vw, 13px)", color: "rgba(255,255,255,0.72)" }}>
+                For over a decade, I have been obsessed with the idea of &ldquo;Saajh&rdquo; — a union. A union between
+                functionality and aesthetics, between the space and the soul that inhabits it. At Urban Saajh,
+                we don&apos;t just build interiors; we curate legacies.
+              </p>
+              <p className="font-sans font-light leading-[1.9]"
+                style={{ fontSize: "clamp(9px, 1.4vw, 13px)", color: "rgba(255,255,255,0.72)" }}>
+                Every project I undertake is a personal commitment. I involve myself in the minute
+                details — from the grain of the wood to the temperature of the light. Because it&apos;s
+                the details that turn a project into a home.
+              </p>
+            </div>
 
-            {/* Quote */}
-            <div style={{ background: "rgba(201,168,124,0.1)", borderLeft: "2px solid #C9A87C", padding: "clamp(8px, 1.8vw, 16px) clamp(10px, 2vw, 18px)", borderRadius: "0 4px 4px 0" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              style={{ background: "rgba(201,168,124,0.1)", borderLeft: "2px solid #C9A87C", padding: "clamp(8px, 1.8vw, 16px) clamp(10px, 2vw, 18px)", borderRadius: "0 4px 4px 0" }}>
               <p className="font-serif italic"
                 style={{ fontSize: "clamp(10px, 1.6vw, 15px)", color: "rgba(255,255,255,0.85)", fontWeight: 300, lineHeight: 1.6 }}>
                 &ldquo;A home should breathe — tell the story of where you&apos;ve been and where you&apos;re going.&rdquo;
@@ -118,17 +154,21 @@ export default function FounderPage() {
                   Tejinder Singh Bhogal
                 </p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── PHILOSOPHY — story left, arch image right ── */}
+      {/* ── PHILOSOPHY ── */}
       <section className="w-full overflow-hidden">
-        <div className="grid grid-cols-2" style={{ minHeight: "clamp(360px, 80vw, 760px)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "clamp(360px, 80vw, 760px)" }}>
 
           {/* Left: dark green content */}
-          <div className="relative flex flex-col justify-center overflow-hidden"
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative flex flex-col justify-center overflow-hidden"
             style={{ background: "#0D3B2E", padding: "clamp(28px, 6vw, 72px) clamp(16px, 4vw, 52px)" }}>
             <div className="absolute top-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -144,14 +184,22 @@ export default function FounderPage() {
               How Tejinder<br /><em className="italic">thinks</em>
             </h2>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1.5vw, 12px)", marginBottom: "clamp(16px, 4vw, 36px)" }}>
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1.5vw, 12px)", marginBottom: "clamp(16px, 4vw, 36px)" }}
+            >
               {[
                 { title: "Modern & Considered", body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place before it enters the room." },
                 { title: "Minimal Luxury", body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always. Less, but better." },
                 { title: "Built for Living", body: "Not a hotel. A home — for the way you actually live. Real meals, real routines, real people. Every day." },
                 { title: "Honest by Default", body: "Budget, space, and expectations — all addressed upfront. No sugarcoating. Just real guidance that protects you." },
               ].map((p) => (
-                <div key={p.title}
+                <motion.div
+                  key={p.title}
+                  variants={fadeInUp}
                   style={{ background: "rgba(201,168,124,0.08)", borderLeft: "2px solid #C9A87C", padding: "clamp(7px, 1.6vw, 14px) clamp(10px, 2vw, 18px)", borderRadius: "0 3px 3px 0" }}>
                   <div className="flex items-center" style={{ gap: "clamp(5px, 1vw, 8px)", marginBottom: "clamp(2px, 0.6vw, 5px)" }}>
                     <span style={{ width: "clamp(5px, 0.9vw, 7px)", height: "clamp(5px, 0.9vw, 7px)", background: "#C9A87C", flexShrink: 0 }} />
@@ -164,9 +212,9 @@ export default function FounderPage() {
                     style={{ fontSize: "clamp(8px, 1.2vw, 11px)", color: "rgba(255,255,255,0.58)", paddingLeft: "clamp(10px, 1.9vw, 15px)" }}>
                     {p.body}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             <Link href="/#contact"
               className="inline-flex items-center self-start font-sans font-light uppercase tracking-[0.2em] transition-all duration-300 group"
@@ -174,10 +222,14 @@ export default function FounderPage() {
               <span>Work with Tejinder</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Right: cream with arch image */}
-          <div className="relative flex flex-col"
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative flex flex-col"
             style={{ background: "#FAF5EC", padding: "clamp(24px, 5vw, 64px) clamp(16px, 4vw, 56px) clamp(24px, 5vw, 64px) clamp(14px, 3vw, 40px)" }}>
             <div className="absolute top-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -206,19 +258,23 @@ export default function FounderPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── FOUNDING QUOTE — full width dark green ── */}
+      {/* ── FOUNDING QUOTE ── */}
       <section className="relative overflow-hidden" style={{ background: "#0D3B2E", padding: "clamp(36px, 7vw, 96px) clamp(16px, 5vw, 80px)" }}>
         <div className="absolute top-0 left-0 right-0 flex justify-between pointer-events-none">
           <div style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
           <div style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
         </div>
 
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Quotation mark */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto text-center"
+        >
           <div className="flex justify-center" style={{ marginBottom: "clamp(12px, 3vw, 28px)" }}>
             <svg width="clamp(24px,5vw,40px)" height="clamp(24px,5vw,40px)" viewBox="0 0 40 40" fill="none" style={{ opacity: 0.4 }}>
               <path d="M10 25H5L10 15V10H20V20C20 25.5228 15.5228 30 10 30V25ZM30 25H25L30 15V10H40V20C40 25.5228 35.5228 30 30 30V25Z" fill="#C9A87C" />
@@ -233,7 +289,7 @@ export default function FounderPage() {
             style={{ fontSize: "clamp(7px, 1.2vw, 10px)", color: "#C9A87C" }}>
             Founding Philosophy — Urban Saajh
           </p>
-        </div>
+        </motion.div>
 
         <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none">
           <div style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -241,11 +297,15 @@ export default function FounderPage() {
         </div>
       </section>
 
-      {/* ── JOURNEY — 3 col cards ── */}
+      {/* ── JOURNEY ── */}
       <section className="relative overflow-hidden" style={{ background: "#FAF5EC", padding: "clamp(28px, 6vw, 80px) clamp(16px, 4vw, 56px)" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between" style={{ marginBottom: "clamp(20px, 4vw, 48px)" }}>
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
               <p className="uppercase font-sans font-light tracking-[0.25em]"
                 style={{ fontSize: "clamp(7px, 1.2vw, 10px)", color: "#C9A87C", marginBottom: "clamp(4px, 1vw, 10px)" }}>
                 The Journey
@@ -254,12 +314,21 @@ export default function FounderPage() {
                 style={{ fontSize: "clamp(1.2rem, 3.8vw, 3rem)" }}>
                 Origins, Vision &amp; Future
               </h2>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="grid grid-cols-3" style={{ gap: "clamp(8px, 2.5vw, 24px)" }}>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3"
+            style={{ gap: "clamp(8px, 2.5vw, 24px)" }}
+          >
             {pillars.map((item, i) => (
-              <div key={item.title}
+              <motion.div
+                key={item.title}
+                variants={fadeInUp}
                 style={{ background: "#0D3B2E", padding: "clamp(16px, 3.5vw, 36px) clamp(14px, 3vw, 28px)" }}>
                 <div className="font-serif italic"
                   style={{ fontSize: "clamp(28px, 7vw, 56px)", color: "rgba(201,168,124,0.2)", lineHeight: 1, marginBottom: "clamp(6px, 1.5vw, 14px)" }}>
@@ -277,16 +346,20 @@ export default function FounderPage() {
                   style={{ fontSize: "clamp(8px, 1.3vw, 13px)", color: "rgba(255,255,255,0.58)", paddingLeft: "clamp(11px, 2vw, 14px)" }}>
                   {item.body}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ── STATS ── */}
       <section className="w-full overflow-hidden">
-        <div className="grid grid-cols-2" style={{ minHeight: "clamp(180px, 35vw, 320px)" }}>
-          <div className="relative flex flex-col justify-center"
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "clamp(180px, 35vw, 320px)" }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="relative flex flex-col justify-center"
             style={{ background: "#0D3B2E", padding: "clamp(24px, 5vw, 64px) clamp(16px, 4vw, 56px)" }}>
             <div className="absolute top-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -297,8 +370,14 @@ export default function FounderPage() {
                 { num: "150+", label: "Projects Completed" },
                 { num: "100%", label: "Turnkey Accountability" },
                 { num: "1", label: "Point of Contact — Always" },
-              ].map((s) => (
-                <div key={s.label} style={{ borderLeft: "2px solid #C9A87C", paddingLeft: "clamp(8px, 2vw, 18px)" }}>
+              ].map((s, idx) => (
+                <motion.div
+                  key={s.label}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  style={{ borderLeft: "2px solid #C9A87C", paddingLeft: "clamp(8px, 2vw, 18px)" }}>
                   <span className="font-serif font-light block"
                     style={{ fontSize: "clamp(1.2rem, 4vw, 3rem)", color: "#C9A87C", lineHeight: 1, marginBottom: "clamp(2px, 0.5vw, 5px)" }}>
                     {s.num}
@@ -307,15 +386,19 @@ export default function FounderPage() {
                     style={{ fontSize: "clamp(7px, 1.2vw, 11px)", color: "rgba(255,255,255,0.55)" }}>
                     {s.label}
                   </span>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             <div className="absolute bottom-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
-          </div>
+          </motion.div>
 
-          <div className="relative flex flex-col justify-center"
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="relative flex flex-col justify-center"
             style={{ background: "#FAF5EC", padding: "clamp(24px, 5vw, 64px) clamp(16px, 4vw, 56px)" }}>
             <div className="absolute top-0 right-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
@@ -341,7 +424,7 @@ export default function FounderPage() {
 
             <div className="absolute bottom-0 left-0"
               style={{ width: "clamp(40px, 12vw, 120px)", height: "clamp(5px, 1vw, 10px)", background: "#C9A87C" }} />
-          </div>
+          </motion.div>
         </div>
       </section>
 
