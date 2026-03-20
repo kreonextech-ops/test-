@@ -34,8 +34,9 @@ export default function Contact() {
             <div className="space-y-3 sm:space-y-5">
               {[
                 { label: "Email", value: "hello@urbansaajh.com" },
-                { label: "Studio", value: "Bagdogra, Siliguri" },
-                { label: "Tel", value: "+44 20 7946 0958" },
+                { label: "Studio", value: "Bhogal Brothers, Bagdogra, Bihar More, PIN Code - 734014" },
+                { label: "Tel", value: "+91-7602016708" },
+                { label: "Note", value: "An Initiative by HK Design Studio" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-2 sm:gap-4">
                   <span className="text-[7px] sm:text-[9px] tracking-[0.2em] uppercase text-[#6B4F3A] font-sans font-light pt-0.5 flex-shrink-0 w-10 sm:w-16">

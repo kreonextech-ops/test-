@@ -7,19 +7,13 @@ import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import AboutUrbanSaajh from "@/components/AboutUrbanSaajh";
 import Founder from "@/components/Founder";
-import Journal from "@/components/Journal";
+import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-
-// Cursor is client-only, avoid SSR
-const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
-  ssr: false,
-});
 
 export default function Home() {
   return (
     <>
-      <CustomCursor />
       <Navbar />
       <main>
         {/* 1. Hero — moody full-screen with rustic shelf photography */}
@@ -37,8 +31,8 @@ export default function Home() {
         {/* 6. Founder — Tejinder Singh Bhogal portrait & story */}
         <Founder />
 
-        {/* 7. Journal */}
-        <Journal />
+        {/* 7. Testimonials */}
+        <Testimonials />
 
         {/* 8. Contact form */}
         <Contact />

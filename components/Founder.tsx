@@ -274,41 +274,17 @@ export default function Founder() {
             </p>
 
             {/* Pillars */}
-            <motion.div 
+            <div 
               style={{ display: "flex", flexDirection: "column", gap: "clamp(5px, 1.3vw, 11px)", marginBottom: "clamp(12px, 3vw, 24px)" }}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{
-                visible: { transition: { staggerChildren: 0.2 } }
-              }}
             >
               {[
-                {
-                  title: "Modern & Considered",
-                  body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place.",
-                },
-                {
-                  title: "Minimal Luxury",
-                  body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always.",
-                },
-                {
-                  title: "Built for Living",
-                  body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours.",
-                },
+                { title: "Modern & Considered", body: "Clean lines, purposeful choices, nothing unnecessary. Every element earns its place." },
+                { title: "Minimal Luxury", body: "Luxury isn't about excess — it's restraint done beautifully. Quality over quantity, always." },
+                { title: "Built for Living", body: "Spaces that work as hard as you do. Comfortable, functional, and genuinely yours." },
               ].map((item) => (
-                <motion.div
+                <div
                   key={item.title}
-                  variants={{
-                    hidden: { opacity: 0, x: -20 },
-                    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
-                  }}
-                  style={{
-                    background: "rgba(201,168,124,0.08)",
-                    borderLeft: "2px solid #C9A87C",
-                    padding: "clamp(7px, 1.6vw, 13px) clamp(10px, 2vw, 16px)",
-                    borderRadius: "0 3px 3px 0",
-                  }}
+                  className="border-t border-white/20 pt-4"
                 >
                   <div className="flex items-center" style={{ gap: "clamp(5px, 1vw, 8px)", marginBottom: "clamp(2px, 0.5vw, 4px)" }}>
                     <span style={{ width: "clamp(5px, 0.9vw, 7px)", height: "clamp(5px, 0.9vw, 7px)", background: "#C9A87C", flexShrink: 0, display: "block" }} />
@@ -325,13 +301,13 @@ export default function Founder() {
                   >
                     {item.body}
                   </p>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* ── MOBILE: swipeable slide ── */}
-          <div className="md:hidden" style={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div className="flex md:hidden flex-col justify-center" style={{ flexGrow: 1 }}>
             <div
               ref={slideRef}
               style={{ cursor: "grab", touchAction: "pan-y", minHeight: "clamp(120px, 34vw, 240px)" }}

@@ -20,9 +20,17 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-sans font-light text-[#6B4F3A] leading-relaxed hidden sm:block"
-              style={{ fontSize: "clamp(7px, 1.2vw, 12px)" }}>
+              style={{ fontSize: "clamp(7px, 1.2vw, 12px)", marginBottom: "8px" }}>
               Artfully curated, naturally inspired interior design studio.
             </p>
+            <div className="hidden sm:block space-y-1">
+              <p className="font-sans font-light text-[#6B4F3A]/80 uppercase tracking-wider" style={{ fontSize: "clamp(6px, 1vw, 10px)" }}>
+                +91-7602016708
+              </p>
+              <p className="font-sans font-light text-[#6B4F3A]/80 leading-tight" style={{ fontSize: "clamp(6px, 1vw, 10px)" }}>
+                Bhogal Brothers, Bagdogra, Bihar More, 734014
+              </p>
+            </div>
           </div>
 
           {/* Services */}
@@ -49,7 +57,7 @@ export default function Footer() {
               Studio
             </p>
             <ul className="space-y-2 sm:space-y-3">
-              {["Portfolio", "About", "Journal", "Contact"].map((item) => (
+              {["Portfolio", "About", "Testimonials", "Contact"].map((item) => (
                 <li key={item}>
                   <Link href={`#${item.toLowerCase()}`}
                     className="font-sans font-light text-[#C8BBA8]/70 hover:text-[#C8BBA8] transition-colors"

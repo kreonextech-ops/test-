@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   },
 };
 
+import dynamic from "next/dynamic";
+
+// Cursor is client-only, avoid SSR
+const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
+  ssr: false,
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }
